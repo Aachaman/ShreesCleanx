@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order - Shree’s CleanX</title>
+  <link href="/css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="bg-blue text-white padding-4 flex justify-center space-x-6 margin-top-2 margin-bottom-2 rounded shadow-md">
+    <a href="index.html"></a><img src="images\WhatsApp_Image_2025-08-30_at_18.06.53_9ef9f608-removebg-preview.png"  class="logo"></a>
+    <a href="index.html" class="hover-underline font-semibold">Home</a>
+    <a href="about.html" class="hover-underline font-semibold">About</a>
+    <a href="products.html" class="hover-underline font-semibold">Products</a>
+    <a href="order.html" class="hover-underline font-semibold">Order</a>
+    <a href="testimonials.html" class="hover-underline font-semibold">Testimonials</a>
+    <a href="contact.html" class="hover-underline font-semibold">Contact</a>
+  </nav>
+  <div class="container padding-4">
+    <h1 class="text-xl font-bold text-center margin-top-2 margin-bottom-2">Easy Ordering. Honest Prices. Quick Delivery.</h1>
+    <h2 class="text-lg font-bold margin-bottom-2">📲 How to Order</h2>
+    <ul class="margin-bottom-2">
+      <li class="text-gray-700">WhatsApp your order to <a href="tel:+917302562455" class="hover-underline">7302562455</a></li>
+      <li class="text-gray-700">Receive today’s price list & offers</li>
+      <li class="text-gray-700">Choose Home Delivery (Haldwani & nearby) or Pickup</li>
+      <li class="text-gray-700">Pay on Delivery (Cash/UPI) or Pre-pay UPI</li>
+    </ul>
+    <h2 class="text-lg font-bold margin-bottom-2">🛒 Your Cart</h2>
+    <div id="cart" class="padding-4 bg-white rounded shadow-md margin-bottom-2"></div>
+    <h3 class="text-lg font-semibold margin-bottom-2">Delivery Option</h3>
+    <label>
+      <input type="checkbox" id="delivery-checkbox" class="margin-right-2"> Opt for Home Delivery
+    </label>
+    <div id="address-section" class="margin-top-2" style="display: none;">
+      <textarea id="address" class="w-full border padding-4 rounded margin-bottom-2" placeholder="Enter your delivery address" rows="3"></textarea>
+    </div>
+    <h3 class="text-lg font-semibold margin-bottom-2">Device</h3>
+    <div class="margin-bottom-2">
+      <label><input type="radio" name="device" value="mobile" checked> Using Mobile</label>
+      <label><input type="radio" name="device" value="desktop"> Using Desktop</label>
+    </div>
+    <p class="text-gray-700 margin-bottom-2">Add more items? Visit the <a href="products.html" class="hover-underline">Products</a> page.</p>
+    <button id="order-btn" class="btn">Place Order</button>
+    <h2 class="text-lg font-bold margin-top-2 margin-bottom-2">🛍 Popular Combos (Best Value)</h2>
+    <div class="grid grid-cols-1 grid-cols-2 gap-6 margin-bottom-2">
+      <div class="padding-4 rounded shadow-md bg-white" onclick="addToCart('Starter Home Pack')">
+        <h3 class="text-lg font-semibold">Starter Home Pack</h3>
+        <p class="text-gray-700">Toilet Cleaner + Phenyl + Dish Wash</p>
+      </div>
+      <div class="padding-4 rounded shadow-md bg-white" onclick="addToCart('Family Hygiene Pack')">
+        <h3 class="text-lg font-semibold">Family Hygiene Pack</h3>
+        <p class="text-gray-700">3 Hand Wash + 3 Bath Soaps (mix & match)</p>
+      </div>
+      <div class="padding-4 rounded shadow-md bg-white" onclick="addToCart('Sparkle Laundry Pack')">
+        <h3 class="text-lg font-semibold">Sparkle Laundry Pack</h3>
+        <p class="text-gray-700">Detergent Powder (2 kg) + Fabric Fresh Add-On</p>
+      </div>
+      <div class="padding-4 rounded shadow-md bg-white" onclick="addToCart('Self-Care Soap Box (Gift)')">
+        <h3 class="text-lg font-semibold">Self-Care Soap Box (Gift)</h3>
+        <p class="text-gray-700">Any 4 premium soaps</p>
+      </div>
+    </div>
+    <h2 class="text-lg font-bold margin-bottom-2">💸 First-Order Perks</h2>
+    <p class="text-gray-700 margin-bottom-2">₹10 OFF or Free Soap with your first order. Free local delivery on qualifying orders.</p>
+    <h2 class="text-lg font-bold margin-bottom-2">🤝 Bulk & Wholesale</h2>
+    <p class="text-gray-700 margin-bottom-2">Special rates for shops, hostels, hotels, offices. Consistent supply | White-label options on request.</p>
+    <h2 class="text-lg font-bold margin-bottom-2">🔁 Subscribe & Save</h2>
+    <p class="text-gray-700 margin-bottom-2">Monthly or bi-monthly Soap / Hand-Wash / Phenyl subscriptions with extra savings. Cancel anytime.</p>
+    <h2 class="text-lg font-bold margin-bottom-2">👯 Referral Rewards</h2>
+    <p class="text-gray-700 margin-bottom-2">Refer 3 friends who order → Get 1 FREE Hand Wash or Bath Soap</p>
+  </div>
+  <footer class="footer margin-top-2">
+    <p>Your Clean, Our Commitment — Made by Women, For Every Home</p>
+    <p>© 2025 Shree’s CleanX. All rights reserved.</p>
+  </footer>
+  <script>
+    // Cart object to store items and their quantities
+    let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+    // Load cart from localStorage on page load
+    window.onload = function() {
+      updateCartDisplay();
+      const checkbox = document.getElementById('delivery-checkbox');
+      const addressSection = document.getElementById('address-section');
+      checkbox.addEventListener('change', function() {
+        addressSection.style.display = this.checked ? 'block' : 'none';
+      });
+    };
+
+    // Add item to cart with quantity
+    function addToCart(item, quantity = 1) {
+      if (cart[item]) {
+        cart[item] += quantity;
+      } else {
+        cart[item] = quantity;
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartDisplay();
+    }
+
+    // Remove item from cart
+    function removeFromCart(item) {
+      delete cart[item];
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartDisplay();
+    }
+
+    // Update quantity
+    function updateQuantity(item, change) {
+      if (cart[item]) {
+        cart[item] += change;
+        if (cart[item] <= 0) {
+          removeFromCart(item);
+        } else {
+          localStorage.setItem('cart', JSON.stringify(cart));
+          updateCartDisplay();
+        }
+      }
+    }
+
+    // Update cart display
+    function updateCartDisplay() {
+      const cartDiv = document.getElementById('cart');
+      if (Object.keys(cart).length === 0) {
+        cartDiv.innerHTML = '<p class="text-gray-700">Your cart is empty. Start adding items!</p>';
+      } else {
+        cartDiv.innerHTML = '<ul>' + Object.entries(cart).map(([item, qty]) => `
+          <li class="cart-item">
+            <span class="text-gray-700">${item}</span>
+            <span class="quantity-controls">
+              <button class="qty-btn" onclick="updateQuantity('${item}', -1)">-</button>
+              <span class="qty">${qty}</span>
+              <button class="qty-btn" onclick="updateQuantity('${item}', 1)">+</button>
+            </span>
+            <button class="remove-btn" onclick="removeFromCart('${item}')">Remove</button>
+          </li>
+        `).join('') + '</ul>';
+      }
+    }
+
+    // Order button event
+    document.addEventListener('DOMContentLoaded', function() {
+      const orderBtn = document.querySelector('#order-btn');
+      
+      orderBtn.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          try {
+              // Build order message (no prices, commas for WhatsApp Web)
+              let orderText = 'Hi Shree’s CleanX Team, Order: ';
+              if (Object.keys(cart).length === 0) {
+                  orderText += 'No items selected. Please add products.';
+              } else {
+                  const items = Object.entries(cart).map(([item, qty]) => {
+                      return `${item} (x${qty})`;
+                  });
+                  orderText += items.join(', ');
+              }
+              
+              const isDelivery = document.getElementById('delivery-checkbox').checked;
+              const deliveryOption = isDelivery ? 'Home Delivery' : 'Pickup';
+              if (isDelivery) {
+                  const address = document.getElementById('address').value.trim();
+                  if (address) {
+                      orderText += `, Delivery Address: ${address}`;
+                  }
+              }
+              orderText += `, Delivery: ${deliveryOption}`;
+              
+              const customerName = ''; // No input, leave empty or add if needed
+              const customerPhone = ''; // No input, leave empty or add if needed
+              orderText += ', Please confirm & reply with price/offer. Thanks!';
+              
+              // Check encoded length
+              const encodedText = encodeURIComponent(orderText);
+              if (encodedText.length > 1900) {
+                  throw new Error('Order message too long for WhatsApp');
+              }
+              
+              // Get device from user selection
+              const selectedDevice = document.querySelector('input[name="device"]:checked').value;
+              const isMobile = selectedDevice === 'mobile';
+              const baseUrl = isMobile ? 'whatsapp://send' : 'https://wa.me';
+              const whatsappUrl = `${baseUrl}?phone=7302562455&text=${encodedText}`;
+              
+              // For desktop, copy to clipboard
+              if (!isMobile) {
+                  navigator.clipboard.writeText(orderText).then(() => {
+                      alert('Order copied to clipboard. Opening WhatsApp—paste the text if it doesn’t auto-fill.');
+                  }).catch(() => {
+                      alert('Could not copy to clipboard. Please copy this: ' + orderText);
+                  });
+              }
+              
+              // Open WhatsApp
+              const opened = window.open(whatsappUrl, '_blank');
+              if (!opened) {
+                  throw new Error('Pop-up blocked. Please allow pop-ups or click again.');
+              }
+              
+              console.log('WhatsApp URL:', whatsappUrl); // Debug
+              
+          } catch (error) {
+              console.error('Order placement error:', error);
+              // Fallback: Copy to clipboard and open blank chat
+              const fallbackText = orderText;
+              navigator.clipboard.writeText(fallbackText).then(() => {
+                  alert('Couldn’t auto-fill WhatsApp. Order copied to clipboard. Opening WhatsApp—please paste the text.');
+                  window.open('https://wa.me/7302562455', '_blank');
+              }).catch(() => {
+                  alert('Error: ' + error.message + '\nOrder details: ' + fallbackText + '\nPlease copy and send to 7302562455.');
+              });
+          }
+      });
+    });
+
+  </script>
+</body>
+</html>
