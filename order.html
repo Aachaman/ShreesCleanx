@@ -1,11 +1,28 @@
-<DOCUMENT filename="order.html">
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order - Shree’s CleanX</title>
-  <link href="/shrees-cleanx/css/styles.css" rel="stylesheet"> <!-- Adjust repo name if different -->
+  <!-- Dynamic CSS path for local and GitHub Pages -->
+  <link href="css/styles.css" rel="stylesheet" id="css-link">
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cssLink = document.getElementById('css-link');
+      if (window.location.hostname.includes('github.io')) {
+        cssLink.href = '/shrees-cleanx/css/styles.css'; // Adjust repo name if different
+      }
+      // Fallback to verify CSS load
+      const checkCSS = setInterval(() => {
+        if (document.styleSheets.length > 0 || document.getElementById('css-link').href.includes('styles.css')) {
+          clearInterval(checkCSS);
+        } else {
+          console.log('CSS not loaded, retrying...');
+          cssLink.href = cssLink.href; // Force reload
+        }
+      }, 500);
+    });
+  </script>
 </head>
 <body>
   <nav class="bg-blue text-white padding-4 flex justify-center space-x-6 margin-top-2 margin-bottom-2 rounded shadow-md">
@@ -136,7 +153,10 @@
     function updateQuantity(item, change) {
       let cart = JSON.parse(localStorage.getItem('cart')) || {};
       if (cart[item]) {
-        cart[item] = Math.max(1, cart[item] + change); // Ensure quantity doesn't go below 1
+        cart[item] += change;
+        if (cart[item] < 1) {
+          delete cart[item]; // Remove item if quantity drops below 1
+        }
         localStorage.setItem('cart', JSON.stringify(cart));
         location.reload(); // Refresh to update display
       }
@@ -158,4 +178,3 @@
   </script>
 </body>
 </html>
-</DOCUMENT>
