@@ -121,7 +121,6 @@ a {
   background-color: #A5D6A7; /* Replaces text-white */
   color: #ffffff; /* Replaces text-white */
   padding: 1rem;
-  bottom: 0;
   text-align: center;
 }
 
@@ -263,6 +262,33 @@ ul {
 .nav-dropdown a:hover {
   background-color: #81c784; /* Slightly darker green on hover */
   text-decoration: underline;
+}
+
+/* Grid utilities */
+.grid {
+  display: grid;
+  gap: 1.5rem; /* Replaces gap-6 */
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* Textarea styles */
+.w-full {
+  width: 100%;
+}
+
+.border {
+  border: 1px solid #e0e0e0; /* Light gray border */
 }
 
 /* Adjust nav for mobile */
