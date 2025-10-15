@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shree’s CleanX</title>
-  <link href="css/styles.css" rel="stylesheet"> <!-- Changed to relative path -->
+  <link href="/shrees-cleanx/css/styles.css" rel="stylesheet"> <!-- Adjust repo name as needed -->
 </head>
 <body>
   <nav class="bg-blue text-white padding-4 flex justify-center space-x-6 margin-top-2 margin-bottom-2 rounded shadow-md">
     <a href="index.html"><img src="images/WhatsApp_Image_2025-08-30_at_18.06.53_9ef9f608-removebg-preview.png" class="logo"></a>
     <span class="nav-toggle">&#9776;</span>
-    <div class="nav-links flex space-x-6">
+    <div class="nav-dropdown">
       <a href="index.html" class="hover-underline font-semibold">Home</a>
       <a href="about.html" class="hover-underline font-semibold">About</a>
       <a href="products.html" class="hover-underline font-semibold">Products</a>
@@ -67,7 +67,7 @@
   </footer>
   <script>
     document.querySelector('.nav-toggle').addEventListener('click', () => {
-      document.querySelector('.nav-links').classList.toggle('active');
+      document.querySelector('.nav-dropdown').classList.toggle('active');
     });
   </script>
 </body>
