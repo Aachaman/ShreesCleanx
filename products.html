@@ -94,22 +94,17 @@
     <p>Your Clean, Our Commitment — Made by Women, For Every Home</p>
     <p>© 2025 Shree’s CleanX. All rights reserved.</p>
   </footer>
-  <script>
-    // Add item to cart with quantity and redirect
-    function addToCart(item) {
-      let cart = JSON.parse(localStorage.getItem('cart')) || {};
-      if (cart[item]) {
-        cart[item] += 1;
-      } else {
-        cart[item] = 1;
-      }
-      localStorage.setItem('cart', JSON.stringify(cart));
-      window.location.href = 'order.html';
+ <script>
+  function addToCart(item) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || {};
+    if (cart[item]) {
+      cart[item] += 1;
+    } else {
+      cart[item] = 1;
     }
-    
-    document.querySelector('.nav-toggle').addEventListener('click', () => {
-      document.querySelector('.nav-dropdown').classList.toggle('active');
-    });
-  </script>
+    localStorage.setItem('cart', JSON.stringify(cart));
+    window.location.href = 'order.html';
+  }
+</script>
 </body>
 </html>
