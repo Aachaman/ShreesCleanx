@@ -4,20 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order - Shree’s CleanX</title>
-  <link href="/ShreesCleanx/css/styles.css" rel="stylesheet">
+  <link href="/shrees-cleanx/css/styles.css" rel="stylesheet"> <!-- Adjust repo name -->
+</head>
 <body>
   <nav class="bg-blue text-white padding-4 flex justify-center space-x-6 margin-top-2 margin-bottom-2 rounded shadow-md">
-  <a href="index.html"><img src="images/WhatsApp_Image_2025-08-30_at_18.06.53_9ef9f608-removebg-preview.png" class="logo"></a>
-  <span class="nav-toggle">&#9776;</span>
-  <div class="nav-dropdown">
-    <a href="index.html" class="hover-underline font-semibold">Home</a>
-    <a href="about.html" class="hover-underline font-semibold">About</a>
-    <a href="products.html" class="hover-underline font-semibold">Products</a>
-    <a href="order.html" class="hover-underline font-semibold">Order</a>
-    <a href="testimonials.html" class="hover-underline font-semibold">Testimonials</a>
-    <a href="contact.html" class="hover-underline font-semibold">Contact</a>
-  </div>
-</nav>
+    <a href="index.html"><img src="images/WhatsApp_Image_2025-08-30_at_18.06.53_9ef9f608-removebg-preview.png" class="logo"></a>
+    <span class="nav-toggle">&#9776;</span>
+    <div class="nav-dropdown">
+      <a href="index.html" class="hover-underline font-semibold">Home</a>
+      <a href="about.html" class="hover-underline font-semibold">About</a>
+      <a href="products.html" class="hover-underline font-semibold">Products</a>
+      <a href="order.html" class="hover-underline font-semibold">Order</a>
+      <a href="testimonials.html" class="hover-underline font-semibold">Testimonials</a>
+      <a href="contact.html" class="hover-underline font-semibold">Contact</a>
+    </div>
+  </nav>
   <div class="container padding-4">
     <h1 class="text-xl font-bold text-center margin-top-2 margin-bottom-2">Easy Ordering. Honest Prices. Quick Delivery.</h1>
     <h2 class="text-lg font-bold margin-bottom-2">📲 How to Order</h2>
@@ -43,50 +44,27 @@
     </div>
     <p class="text-gray-700 margin-bottom-2">Add more items? Visit the <a href="products.html" class="hover-underline">Products</a> page.</p>
     <button id="order-btn" class="btn">Place Order</button>
-    <h2 class="text-lg font-bold margin-top-2 margin-bottom-2">🛍 Popular Combos (Best Value)</h2>
-    <div class="grid grid-cols-1 grid-cols-2 gap-6 margin-bottom-2">
-      <div class="padding-4 rounded shadow-md bg-white" onclick="addToCart('Starter Home Pack')">
-        <h3 class="text-lg font-semibold">Starter Home Pack</h3>
-        <p class="text-gray-700">Toilet Cleaner (500ml) + Hand Wash (200ml) + Dish Wash (250ml)</p>
-      </div>
-      <div class="padding-4 rounded shadow-md bg-white" onclick="addToCart('Family Essentials Pack')">
-        <h3 class="text-lg font-semibold">Family Essentials Pack</h3>
-        <p class="text-gray-700">Phenyl (1L) + Detergent Powder (1kg) + 2 Soap Bars</p>
-      </div>
-    </div>
   </div>
   <footer class="footer margin-top-2">
     <p>Your Clean, Our Commitment — Made by Women, For Every Home</p>
     <p>© 2025 Shree’s CleanX. All rights reserved.</p>
   </footer>
   <script>
-    // Add item to cart with quantity and redirect
-    function addToCart(item) {
-      let cart = JSON.parse(localStorage.getItem('cart')) || {};
-      if (cart[item]) {
-        cart[item] += 1;
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log("Page loaded, checking cart");
+      const cart = JSON.parse(localStorage.getItem('cart')) || {};
+      const cartDiv = document.getElementById('cart');
+      if (Object.keys(cart).length === 0) {
+          cartDiv.innerHTML = '<p class="text-gray-700">Your cart is empty. Add items from the <a href="products.html" class="hover-underline">Products</a> page.</p>';
       } else {
-        cart[item] = 1;
+          cartDiv.innerHTML = '<h3 class="text-lg font-semibold margin-bottom-2">Items:</h3>' +
+              Object.entries(cart).map(([item, qty]) => `
+                  <div class="cart-item">
+                      <span>${item} (x${qty})</span>
+                      <button class="remove-btn" onclick="removeFromCart('${item}')">Remove</button>
+                  </div>
+              `).join('');
       }
-      localStorage.setItem('cart', JSON.stringify(cart));
-      window.location.href = 'order.html';
-    }
-
-    // Order placement logic
-  document.addEventListener('DOMContentLoaded', () => {
-    const cart = JSON.parse(localStorage.getItem('cart')) || {};
-    const cartDiv = document.getElementById('cart');
-    if (Object.keys(cart).length === 0) {
-        cartDiv.innerHTML = '<p class="text-gray-700">Your cart is empty. Add items from the <a href="products.html" class="hover-underline">Products</a> page.</p>';
-    } else {
-        cartDiv.innerHTML = '<h3 class="text-lg font-semibold margin-bottom-2">Items:</h3>' +
-            Object.entries(cart).map(([item, qty]) => `
-                <div class="cart-item">
-                    <span>${item} (x${qty})</span>
-                    <button class="remove-btn" onclick="removeFromCart('${item}')">Remove</button>
-                </div>
-            `).join('');
-    }
 
       document.getElementById('delivery-checkbox').addEventListener('change', (e) => {
           document.getElementById('address-section').style.display = e.target.checked ? 'block' : 'none';
@@ -95,12 +73,9 @@
       document.getElementById('order-btn').addEventListener('click', () => {
           let orderText = 'Order from Shree’s CleanX: ';
           if (Object.keys(cart).length > 0) {
-              const items = Object.entries(cart).map(([item, qty]) => {
-                  return `${item} (x${qty})`;
-              });
+              const items = Object.entries(cart).map(([item, qty]) => `${item} (x${qty})`);
               orderText += items.join(', ');
           }
-
           const isDelivery = document.getElementById('delivery-checkbox').checked;
           const deliveryOption = isDelivery ? 'Home Delivery' : 'Pickup';
           if (isDelivery) {
@@ -110,9 +85,8 @@
               }
           }
           orderText += `, Delivery: ${deliveryOption}`;
-
-          const customerName = ''; // No input, leave empty or add if needed
-          const customerPhone = ''; // No input, leave empty or add if needed
+          const customerName = '';
+          const customerPhone = '';
           orderText += ', Please confirm & reply with price/offer. Thanks!';
 
           const encodedText = encodeURIComponent(orderText);
@@ -139,29 +113,21 @@
           }
 
           console.log('WhatsApp URL:', whatsappUrl);
-      } catch (error) {
-          console.error('Order placement error:', error);
-          const fallbackText = orderText;
-          navigator.clipboard.writeText(fallbackText).then(() => {
-              alert('Couldn’t auto-fill WhatsApp. Order copied to clipboard. Opening WhatsApp—please paste the text.');
-              window.open('https://wa.me/7302562455', '_blank');
-          }).catch(() => {
-              alert('Error: ' + error.message + '\nOrder details: ' + fallbackText + '\nPlease copy and send to 7302562455.');
-          });
-      }
       });
+    });
 
-     function removeFromCart(item) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || {};
-    if (cart[item]) {
-        delete cart[item];
-        localStorage.setItem('cart', JSON.stringify(cart));
-        location.reload(); // Refresh to update cart display
+    function removeFromCart(item) {
+      console.log("Removing:", item);
+      let cart = JSON.parse(localStorage.getItem('cart')) || {};
+      if (cart[item]) {
+          delete cart[item];
+          localStorage.setItem('cart', JSON.stringify(cart));
+          location.reload();
+      }
     }
-  }
-    }); 
+
     document.querySelector('.nav-toggle').addEventListener('click', () => {
-    document.querySelector('.nav-dropdown').classList.toggle('active');
+      document.querySelector('.nav-dropdown').classList.toggle('active');
     });
   </script>
 </body>
