@@ -1,15 +1,232 @@
-/* Existing CSS remains unchanged until the new section */
+/* Reset default browser styles for consistency */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/* Dropdown menu styles */
+/* Use in Logo */
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 30%;
+}
+
+/* Used In logo at nav */
+.logo {
+  height: auto;
+  max-width: 90px;
+}
+
+/* General body styles */
+body {
+  font-family: "Times New Roman", Times, serif;
+  line-height: 1.5;
+  color: #374151; /* Equivalent to text-gray-700 */
+  background-color: #FAFAFA;
+}
+
+/* Links: Remove default underline */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Margin utilities */
+.margin-top-2 {
+  margin-top: 0.5rem; /* 8px, replaces mt-2 */
+}
+.margin-bottom-2 {
+  margin-bottom: 0.5rem; /* 8px, replaces mb-2 */
+}
+.margin-right-2 {
+  margin-right: 0.5rem; /* 8px */
+}
+
+/* Border radius */
+.rounded {
+  border-radius: 0.25rem; /* 4px, replaces rounded */
+}
+
+/* Box shadow */
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Replaces shadow-md */
+}
+
+/* Background colors */
+.bg-blue {
+  background-color: #A5D6A7; /* Light green, replaces bg-blue-600 */
+}
+.bg-white {
+  background-color: #F0F0F0; /* Slightly off-white, replaces bg-white */
+}
+.bg-gray-100 {
+  background-color: #e0e0e0; /* Medium gray, replaces bg-gray-100 */
+}
+
+/* Text colors */
+.text-white {
+  color: #ffffff; /* Replaces text-white */
+}
+.text-gray-700 {
+  color: #374151; /* Replaces text-gray-700 */
+}
+
+/* Padding utilities */
+.padding-4 {
+  padding: 1rem; /* 16px, replaces p-4 */
+}
+.padding-x-4 {
+  padding-left: 1rem;
+  padding-right: 1rem; /* Replaces px-4 */
+}
+.padding-y-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem; /* Replaces py-4 */
+}
+
+/* Flexbox utilities */
+.flex {
+  display: flex;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-center {
+  justify-content: center;
+}
+.items-center {
+  align-items: center;
+}
+.space-x-6 > * + * {
+  margin-left: 1.5rem; /* 24px, replaces space-x-6 */
+}
+
+/* Hover effects */
+.hover-underline:hover {
+  text-decoration: underline; /* Replaces hover:underline */
+}
+
+/* Font utilities */
+.font-semibold {
+  font-weight: 600; /* Replaces font-semibold */
+}
+.font-bold {
+  font-weight: 700; /* Replaces font-bold */
+}
+
+/* Footer styles */
+.footer {
+  background-color: #A5D6A7; /* Replaces text-white */
+  color: #ffffff; /* Replaces text-white */
+  padding: 1rem;
+  bottom: 0;
+  text-align: center;
+}
+
+/* List styles for better formatting */
+ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+/* Image styles for cards */
+.img-card {
+  width: 100%; /* Full width of the card */
+  max-width: 150px; /* Limit max width to prevent oversized images */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Ensure image is block-level */
+  margin: 0 auto 0.5rem; /* Center image, add bottom margin */
+  object-fit: contain; /* Fit image without cropping */
+}
+
+/* Product link styles */
+.product-link {
+  text-decoration: none;
+  color: inherit;
+  display: block; /* Ensure the entire card is clickable */
+}
+.product-link:hover .shadow-md {
+  box-shadow: 0 6px 12px -2px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
+}
+
+/* Remove button styles */
+.remove-btn {
+  background-color: #ef4444; /* Red color */
+  color: #ffffff;
+  padding: 0.25rem 0.5rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  margin-left: 0.5rem;
+}
+.remove-btn:hover {
+  background-color: #dc2626; /* Darker red on hover */
+}
+
+/* Quantity button styles */
+.qty-btn {
+  background-color: #A5D6A7; /* Light green to match navigation */
+  color: #ffffff;
+  padding: 0.25rem 0.75rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-size: 0.75rem;
+  margin: 0 0.25rem; /* Space between buttons */
+}
+.qty-btn:hover {
+  background-color: #81c784; /* Slightly darker green on hover */
+}
+
+.qty {
+  padding: 0.25rem 0.5rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.quantity-controls {
+  display: flex;
+  flex-direction: row; /* Horizontal layout */
+  align-items: center; /* Center align items vertically */
+  width: 120px; /* Fixed width to keep position consistent */
+  margin: 0 1rem 0 0; /* Spacing from item name, no left margin */
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between; /* Space between name, controls, and remove */
+  align-items: center; /* Align items horizontally */
+  padding: 0.5rem 0;
+  min-height: 40px; /* Minimum height to ensure alignment */
+}
+
+.cart-item > span:first-child {
+  flex: 1; /* Allow product name to take available space */
+  word-wrap: break-word; /* Break long names */
+  max-width: 60%; /* Limit name width to prevent overflow */
+}
+
+/* Hamburger and Dropdown menu styles */
+.nav-toggle {
+  display: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #ffffff;
+}
+
 .nav-dropdown {
   display: none;
   position: absolute;
   top: 100%; /* Below the nav */
   left: 0;
   width: 100%;
-  background-color: #A5D6A7;
+  background-color: #A5D6A7; /* Match nav background */
   z-index: 1000;
   padding: 0.5rem 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Match shadow-md */
 }
 
 .nav-dropdown.active {
@@ -19,12 +236,12 @@
 .nav-dropdown a {
   display: block;
   padding: 0.5rem 1rem;
-  color: #ffffff;
+  color: #ffffff; /* Match text-white */
   text-align: center;
 }
 
 .nav-dropdown a:hover {
-  background-color: #81c784;
+  background-color: #81c784; /* Slightly darker green on hover */
   text-decoration: underline;
 }
 
@@ -34,13 +251,9 @@
     display: block;
   }
 
-  .nav-links {
-    display: none; /* Ensure links aren't shown inline */
-  }
-
   nav {
     padding: 0.5rem;
-    flex-direction: row; /* Keep horizontal on mobile for logo only */
+    flex-direction: row; /* Keep horizontal for logo only */
     justify-content: center;
     position: relative; /* For dropdown positioning */
   }
@@ -78,33 +291,5 @@
   p, li {
     font-size: 0.95rem;
     line-height: 1.6;
-  }
-
-  /* Replace nav-links with dropdown */
-  .nav-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #A5D6A7;
-    z-index: 1000;
-    padding: 0.5rem 0;
-  }
-
-  .nav-dropdown.active {
-    display: block;
-  }
-
-  .nav-dropdown a {
-    display: block;
-    padding: 0.5rem 1rem;
-    color: #ffffff;
-    text-align: center;
-  }
-
-  .nav-dropdown a:hover {
-    background-color: #81c784;
-    text-decoration: underline;
   }
 }
