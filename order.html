@@ -1,10 +1,11 @@
+<DOCUMENT filename="order.html">
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order - Shree’s CleanX</title>
-  <link href="/ShreesCleanx/css/styles.css" rel="stylesheet"> <!-- Adjust repo name -->
+  <link href="/shrees-cleanx/css/styles.css" rel="stylesheet"> <!-- Adjust repo name if different -->
 </head>
 <body>
   <nav class="bg-blue text-white padding-4 flex justify-center space-x-6 margin-top-2 margin-bottom-2 rounded shadow-md">
@@ -43,6 +44,7 @@
       <label><input type="radio" name="device" value="desktop"> Using Desktop</label>
     </div>
     <p class="text-gray-700 margin-bottom-2">Add more items? Visit the <a href="products.html" class="hover-underline">Products</a> page.</p>
+    <div id="total-cost" class="text-lg font-semibold margin-bottom-2" style="display: none;">Total Cost: ₹0</div>
     <button id="order-btn" class="btn">Place Order</button>
   </div>
   <footer class="footer margin-top-2">
@@ -54,75 +56,99 @@
       console.log("Page loaded, checking cart");
       const cart = JSON.parse(localStorage.getItem('cart')) || {};
       const cartDiv = document.getElementById('cart');
-      if (Object.keys(cart).length === 0) {
+      const totalCostDiv = document.getElementById('total-cost');
+
+      function updateCartDisplay() {
+        if (Object.keys(cart).length === 0) {
           cartDiv.innerHTML = '<p class="text-gray-700">Your cart is empty. Add items from the <a href="products.html" class="hover-underline">Products</a> page.</p>';
-      } else {
+          totalCostDiv.style.display = 'none';
+        } else {
           cartDiv.innerHTML = '<h3 class="text-lg font-semibold margin-bottom-2">Items:</h3>' +
-              Object.entries(cart).map(([item, qty]) => `
-                  <div class="cart-item">
-                      <span>${item} (x${qty})</span>
-                      <button class="remove-btn" onclick="removeFromCart('${item}')">Remove</button>
-                  </div>
-              `).join('');
+            Object.entries(cart).map(([item, qty]) => `
+              <div class="cart-item">
+                <span>${item}</span>
+                <div class="quantity-controls">
+                  <button class="qty-btn" onclick="updateQuantity('${item}', -1)">-</button>
+                  <span class="qty">${qty}</span>
+                  <button class="qty-btn" onclick="updateQuantity('${item}', 1)">+</button>
+                </div>
+                <button class="remove-btn" onclick="removeFromCart('${item}')">Remove</button>
+              </div>
+            `).join('');
+          const total = Object.values(cart).reduce((sum, qty) => sum + qty * 100, 0);
+          totalCostDiv.textContent = `Total Cost: ₹${total}`;
+          totalCostDiv.style.display = 'block';
+        }
       }
 
+      updateCartDisplay();
+
       document.getElementById('delivery-checkbox').addEventListener('change', (e) => {
-          document.getElementById('address-section').style.display = e.target.checked ? 'block' : 'none';
+        document.getElementById('address-section').style.display = e.target.checked ? 'block' : 'none';
       });
 
       document.getElementById('order-btn').addEventListener('click', () => {
-          let orderText = 'Order from Shree’s CleanX: ';
-          if (Object.keys(cart).length > 0) {
-              const items = Object.entries(cart).map(([item, qty]) => `${item} (x${qty})`);
-              orderText += items.join(', ');
+        let orderText = 'Order from Shree’s CleanX: ';
+        if (Object.keys(cart).length > 0) {
+          const items = Object.entries(cart).map(([item, qty]) => `${item} (x${qty})`);
+          orderText += items.join(', ');
+        }
+        const isDelivery = document.getElementById('delivery-checkbox').checked;
+        const deliveryOption = isDelivery ? 'Home Delivery' : 'Pickup';
+        if (isDelivery) {
+          const address = document.getElementById('address').value.trim();
+          if (address) {
+            orderText += `, Delivery Address: ${address}`;
           }
-          const isDelivery = document.getElementById('delivery-checkbox').checked;
-          const deliveryOption = isDelivery ? 'Home Delivery' : 'Pickup';
-          if (isDelivery) {
-              const address = document.getElementById('address').value.trim();
-              if (address) {
-                  orderText += `, Delivery Address: ${address}`;
-              }
-          }
-          orderText += `, Delivery: ${deliveryOption}`;
-          const customerName = '';
-          const customerPhone = '';
-          orderText += ', Please confirm & reply with price/offer. Thanks!';
+        }
+        orderText += `, Delivery: ${deliveryOption}, Total Cost: ₹${totalCostDiv.textContent.split('₹')[1]}`;
+        const customerName = '';
+        const customerPhone = '';
+        orderText += ', Please confirm & reply with price/offer. Thanks!';
 
-          const encodedText = encodeURIComponent(orderText);
-          if (encodedText.length > 1900) {
-              throw new Error('Order message too long for WhatsApp');
-          }
+        const encodedText = encodeURIComponent(orderText);
+        if (encodedText.length > 1900) {
+          throw new Error('Order message too long for WhatsApp');
+        }
 
-          const selectedDevice = document.querySelector('input[name="device"]:checked').value;
-          const isMobile = selectedDevice === 'mobile';
-          const baseUrl = isMobile ? 'whatsapp://send' : 'https://wa.me';
-          const whatsappUrl = `${baseUrl}?phone=7302562455&text=${encodedText}`;
+        const selectedDevice = document.querySelector('input[name="device"]:checked').value;
+        const isMobile = selectedDevice === 'mobile';
+        const baseUrl = isMobile ? 'whatsapp://send' : 'https://wa.me';
+        const whatsappUrl = `${baseUrl}?phone=7302562455&text=${encodedText}`;
 
-          if (!isMobile) {
-              navigator.clipboard.writeText(orderText).then(() => {
-                  alert('Order copied to clipboard. Opening WhatsApp—paste the text if it doesn’t auto-fill.');
-              }).catch(() => {
-                  alert('Could not copy to clipboard. Please copy this: ' + orderText);
-              });
-          }
+        if (!isMobile) {
+          navigator.clipboard.writeText(orderText).then(() => {
+            alert('Order copied to clipboard. Opening WhatsApp—paste the text if it doesn’t auto-fill.');
+          }).catch(() => {
+            alert('Could not copy to clipboard. Please copy this: ' + orderText);
+          });
+        }
 
-          const opened = window.open(whatsappUrl, '_blank');
-          if (!opened) {
-              throw new Error('Pop-up blocked. Please allow pop-ups or click again.');
-          }
+        const opened = window.open(whatsappUrl, '_blank');
+        if (!opened) {
+          throw new Error('Pop-up blocked. Please allow pop-ups or click again.');
+        }
 
-          console.log('WhatsApp URL:', whatsappUrl);
+        console.log('WhatsApp URL:', whatsappUrl);
       });
     });
+
+    function updateQuantity(item, change) {
+      let cart = JSON.parse(localStorage.getItem('cart')) || {};
+      if (cart[item]) {
+        cart[item] = Math.max(1, cart[item] + change); // Ensure quantity doesn't go below 1
+        localStorage.setItem('cart', JSON.stringify(cart));
+        location.reload(); // Refresh to update display
+      }
+    }
 
     function removeFromCart(item) {
       console.log("Removing:", item);
       let cart = JSON.parse(localStorage.getItem('cart')) || {};
       if (cart[item]) {
-          delete cart[item];
-          localStorage.setItem('cart', JSON.stringify(cart));
-          location.reload();
+        delete cart[item];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        location.reload();
       }
     }
 
@@ -132,3 +158,4 @@
   </script>
 </body>
 </html>
+</DOCUMENT>
