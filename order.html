@@ -8,17 +8,17 @@
 </head>
 <body>
   <nav class="bg-blue text-white padding-4 flex justify-center space-x-6 margin-top-2 margin-bottom-2 rounded shadow-md">
-    <a href="index.html"><img src="images/WhatsApp_Image_2025-08-30_at_18.06.53_9ef9f608-removebg-preview.png" class="logo"></a>
-    <span class="nav-toggle">&#9776;</span>
-    <div class="nav-links flex space-x-6">
-      <a href="index.html" class="hover-underline font-semibold">Home</a>
-      <a href="about.html" class="hover-underline font-semibold">About</a>
-      <a href="products.html" class="hover-underline font-semibold">Products</a>
-      <a href="order.html" class="hover-underline font-semibold">Order</a>
-      <a href="testimonials.html" class="hover-underline font-semibold">Testimonials</a>
-      <a href="contact.html" class="hover-underline font-semibold">Contact</a>
-    </div>
-  </nav>
+  <a href="index.html"><img src="images/WhatsApp_Image_2025-08-30_at_18.06.53_9ef9f608-removebg-preview.png" class="logo"></a>
+  <span class="nav-toggle">&#9776;</span>
+  <div class="nav-dropdown">
+    <a href="index.html" class="hover-underline font-semibold">Home</a>
+    <a href="about.html" class="hover-underline font-semibold">About</a>
+    <a href="products.html" class="hover-underline font-semibold">Products</a>
+    <a href="order.html" class="hover-underline font-semibold">Order</a>
+    <a href="testimonials.html" class="hover-underline font-semibold">Testimonials</a>
+    <a href="contact.html" class="hover-underline font-semibold">Contact</a>
+  </div>
+</nav>
   <div class="container padding-4">
     <h1 class="text-xl font-bold text-center margin-top-2 margin-bottom-2">Easy Ordering. Honest Prices. Quick Delivery.</h1>
     <h2 class="text-lg font-bold margin-bottom-2">📲 How to Order</h2>
@@ -160,10 +160,9 @@
               location.reload(); // Refresh to update cart display
           }
       }
-    });
-
+    }); 
     document.querySelector('.nav-toggle').addEventListener('click', () => {
-      document.querySelector('.nav-links').classList.toggle('active');
+    document.querySelector('.nav-dropdown').classList.toggle('active');
     });
   </script>
 </body>
