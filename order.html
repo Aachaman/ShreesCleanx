@@ -4,21 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Order - Shree’s CleanX</title>
-  <!-- Dynamic CSS path for local and GitHub Pages -->
+  <!-- Initial relative path, will be adjusted dynamically -->
   <link href="css/styles.css" rel="stylesheet" id="css-link">
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const cssLink = document.getElementById('css-link');
+      console.log('Initial CSS path:', cssLink.href);
+      // Adjust path based on environment
       if (window.location.hostname.includes('github.io')) {
         cssLink.href = '/shrees-cleanx/css/styles.css'; // Adjust repo name if different
+        console.log('Adjusted to GitHub Pages path:', cssLink.href);
+      } else {
+        console.log('Using local path:', cssLink.href);
       }
-      // Fallback to verify CSS load
+      // Verify CSS load with retry
       const checkCSS = setInterval(() => {
-        if (document.styleSheets.length > 0 || document.getElementById('css-link').href.includes('styles.css')) {
+        if (document.styleSheets.length > 0 && document.styleSheets[0].href.includes('styles.css')) {
+          console.log('CSS loaded successfully:', document.styleSheets[0].href);
           clearInterval(checkCSS);
         } else {
-          console.log('CSS not loaded, retrying...');
-          cssLink.href = cssLink.href; // Force reload
+          console.error('CSS not loaded, retrying... Current href:', cssLink.href);
+          cssLink.href = cssLink.href.includes('github.io') ? '/shrees-cleanx/css/styles.css' : 'css/styles.css'; // Force reload
         }
       }, 500);
     });
