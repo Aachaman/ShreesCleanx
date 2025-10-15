@@ -4,21 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Products - Shree’s CleanX</title>
-  <link href="/ShreesCleanx/css/styles.css" rel="stylesheet">
+  <link href="/shrees-cleanx/css/styles.css" rel="stylesheet"> <!-- Adjust repo name -->
 </head>
 <body>
   <nav class="bg-blue text-white padding-4 flex justify-center space-x-6 margin-top-2 margin-bottom-2 rounded shadow-md">
-  <a href="index.html"><img src="images/WhatsApp_Image_2025-08-30_at_18.06.53_9ef9f608-removebg-preview.png" class="logo"></a>
-  <span class="nav-toggle">&#9776;</span>
-  <div class="nav-dropdown">
-    <a href="index.html" class="hover-underline font-semibold">Home</a>
-    <a href="about.html" class="hover-underline font-semibold">About</a>
-    <a href="products.html" class="hover-underline font-semibold">Products</a>
-    <a href="order.html" class="hover-underline font-semibold">Order</a>
-    <a href="testimonials.html" class="hover-underline font-semibold">Testimonials</a>
-    <a href="contact.html" class="hover-underline font-semibold">Contact</a>
-  </div>
-</nav>
+    <a href="index.html"><img src="images/WhatsApp_Image_2025-08-30_at_18.06.53_9ef9f608-removebg-preview.png" class="logo"></a>
+    <span class="nav-toggle">&#9776;</span>
+    <div class="nav-dropdown">
+      <a href="index.html" class="hover-underline font-semibold">Home</a>
+      <a href="about.html" class="hover-underline font-semibold">About</a>
+      <a href="products.html" class="hover-underline font-semibold">Products</a>
+      <a href="order.html" class="hover-underline font-semibold">Order</a>
+      <a href="testimonials.html" class="hover-underline font-semibold">Testimonials</a>
+      <a href="contact.html" class="hover-underline font-semibold">Contact</a>
+    </div>
+  </nav>
   <div class="container padding-4">
     <h1 class="text-xl font-bold text-center margin-top-2 margin-bottom-2">Our Range — Pure, Handmade, Women-Led & Affordable</h1>
     <p class="text-gray-700 text-center margin-bottom-2">Crafted in small batches, trusted by families and businesses across Uttarakhand.</p>
@@ -94,17 +94,23 @@
     <p>Your Clean, Our Commitment — Made by Women, For Every Home</p>
     <p>© 2025 Shree’s CleanX. All rights reserved.</p>
   </footer>
- <script>
-  function addToCart(item) {
-    let cart = JSON.parse(localStorage.getItem('cart')) || {};
-    if (cart[item]) {
-      cart[item] += 1;
-    } else {
-      cart[item] = 1;
+  <script>
+    function addToCart(item) {
+      console.log("Adding to cart:", item);
+      let cart = JSON.parse(localStorage.getItem('cart')) || {};
+      if (cart[item]) {
+        cart[item] += 1;
+      } else {
+        cart[item] = 1;
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      console.log("Cart saved:", cart);
+      window.location.href = 'order.html';
     }
-    localStorage.setItem('cart', JSON.stringify(cart));
-    window.location.href = 'order.html';
-  }
-</script>
+
+    document.querySelector('.nav-toggle').addEventListener('click', () => {
+      document.querySelector('.nav-dropdown').classList.toggle('active');
+    });
+  </script>
 </body>
 </html>
