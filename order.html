@@ -73,20 +73,20 @@
     }
 
     // Order placement logic
-    document.addEventListener('DOMContentLoaded', () => {
-      const cart = JSON.parse(localStorage.getItem('cart')) || {};
-      const cartDiv = document.getElementById('cart');
-      if (Object.keys(cart).length === 0) {
-          cartDiv.innerHTML = '<p class="text-gray-700">Your cart is empty. Add items from the <a href="products.html" class="hover-underline">Products</a> page.</p>';
-      } else {
-          cartDiv.innerHTML = '<h3 class="text-lg font-semibold margin-bottom-2">Items:</h3>' +
-              Object.entries(cart).map(([item, qty]) => `
-                  <div class="cart-item">
-                      <span>${item} (x${qty})</span>
-                      <button class="remove-btn" onclick="removeFromCart('${item}')">Remove</button>
-                  </div>
-              `).join('');
-      }
+  document.addEventListener('DOMContentLoaded', () => {
+    const cart = JSON.parse(localStorage.getItem('cart')) || {};
+    const cartDiv = document.getElementById('cart');
+    if (Object.keys(cart).length === 0) {
+        cartDiv.innerHTML = '<p class="text-gray-700">Your cart is empty. Add items from the <a href="products.html" class="hover-underline">Products</a> page.</p>';
+    } else {
+        cartDiv.innerHTML = '<h3 class="text-lg font-semibold margin-bottom-2">Items:</h3>' +
+            Object.entries(cart).map(([item, qty]) => `
+                <div class="cart-item">
+                    <span>${item} (x${qty})</span>
+                    <button class="remove-btn" onclick="removeFromCart('${item}')">Remove</button>
+                </div>
+            `).join('');
+    }
 
       document.getElementById('delivery-checkbox').addEventListener('change', (e) => {
           document.getElementById('address-section').style.display = e.target.checked ? 'block' : 'none';
@@ -151,14 +151,14 @@
       }
       });
 
-      function removeFromCart(item) {
-          let cart = JSON.parse(localStorage.getItem('cart')) || {};
-          if (cart[item]) {
-              delete cart[item];
-              localStorage.setItem('cart', JSON.stringify(cart));
-              location.reload(); // Refresh to update cart display
-          }
-      }
+     function removeFromCart(item) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || {};
+    if (cart[item]) {
+        delete cart[item];
+        localStorage.setItem('cart', JSON.stringify(cart));
+        location.reload(); // Refresh to update cart display
+    }
+  }
     }); 
     document.querySelector('.nav-toggle').addEventListener('click', () => {
     document.querySelector('.nav-dropdown').classList.toggle('active');
