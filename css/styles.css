@@ -19,14 +19,13 @@
       max-width: 90px /* Adjust width as needed */
     }
 
-
      /* General body styles */
      body {
-       font-family: cursive;
-       line-height: 1.5;
-       color: #374151; /* Equivalent to text-gray-700 */
-       background-color: #FAFAFA;
-     }
+      font-family: "Times New Roman", Times, serif;
+      line-height: 1.5;
+      color: #374151;/* Equivalent to text-gray-700 */
+      background-color: #FAFAFA;
+    }
 
      /* Links: Remove default underline */
      a {
